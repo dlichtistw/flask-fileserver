@@ -28,9 +28,11 @@ def create_app(test_config=None):
     
     from . import auth
     app.register_blueprint(auth.bp)
+    auth.init_app(app)
     
-    from . import files
-    app.register_blueprint(files.bp)
+    from . import blog
+    app.register_blueprint(blog.bp)
     app.add_url_rule("/", endpoint="index")
+    blog.init_app(app)
     
     return app

@@ -3,7 +3,7 @@
 from sqlite3 import connect, PARSE_DECLTYPES, Row
 from flask import current_app, g
 from flask.cli import with_appcontext
-from click import command as click_command, echo as click_echo
+from click import command, echo
 
 def get_db():
     if "db" not in g:
@@ -26,12 +26,12 @@ def init_db():
     with current_app.open_resource("schema.sql") as schema_file:
         db.executescript(schema_file.read().decode("utf8"))
 
-@click_command("init-db")
+@command("init-db")
 @with_appcontext
 def init_db_command():
     """(Re-)Initialize the application database."""
     init_db()
-    click_echo("Database initialized.")
+    echo("Database initialized.")
 
 def init_app(app):
     app.teardown_appcontext(close_db)
