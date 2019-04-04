@@ -148,9 +148,12 @@ def update(id):
                 {"title": title, "body": body, "date": dt.isoformat() if dt else None, "pid": id}
             ).close()
             db.commit()
-            return redirect(url_for("blog.index"))
+
+            add_files(id, request.files.getlist("files"))
+            
+            return redirect(url_for(".show", id=id))
     
-    return render_template("blog/update.html", post=get_post(id))
+    return render_template("blog/update.html", post=get_post(id), files=get_files(id))
 
 @bp.route("/<int:id>/delete", methods=("POST",))
 @user_required("@admin")
