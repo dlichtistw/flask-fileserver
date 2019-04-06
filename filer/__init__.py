@@ -35,4 +35,7 @@ def create_app(test_config=None):
     app.add_url_rule("/", endpoint="index")
     blog.init_app(app)
     
+    from . import files
+    app.register_blueprint(files.bp)
+    
     return app

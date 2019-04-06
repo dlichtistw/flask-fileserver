@@ -11,10 +11,13 @@
     <article class="post">
         <p class="body">{{ post["body"] }}</p>
         <hr>
-        <ul>
         {% for file in files %}
-            <li>{{ file.name }}
+            <div>
+                <a href="{{ url_for("files.download", fid=file.id) }}">{{ file.name }}</a><br>
+                {% if file.isaudio %}
+                    <audio controls src="{{ url_for("files.download", fid=file.id) }}">Your browser does not support audio.</audio>
+                {% endif %}
+            </div>
         {% endfor %}
-        </ul>
     </article>
 {% endblock %}
